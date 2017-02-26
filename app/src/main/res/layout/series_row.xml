@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:orientation="vertical" android:layout_width="match_parent"
     android:layout_height="match_parent">
 
@@ -10,7 +11,8 @@
         android:textSize="24sp"
         android:textStyle="normal|bold"
         android:textAlignment="center"
-        android:layout_marginTop="15dp"/>
+        android:layout_marginTop="15dp"
+        android:textColor="@android:color/black" />
 
     <LinearLayout
         android:orientation="horizontal"
@@ -23,7 +25,8 @@
             android:layout_weight="50.0"
             android:textSize="18sp"
             android:textAlignment="center"
-            android:text="Season"/>
+            android:text="Season"
+            android:textColor="@android:color/black" />
 
         <TextView
             android:layout_width="0dp"
@@ -31,7 +34,8 @@
             android:layout_weight="50.0"
             android:textSize="18sp"
             android:textAlignment="center"
-            android:text="Episode"/>
+            android:text="Episode"
+            android:textColor="@android:color/black" />
 
     </LinearLayout>
 
@@ -46,7 +50,8 @@
             android:layout_weight="50.0"
             android:id="@+id/season_number_field"
             android:textSize="18sp"
-            android:textAlignment="center" />
+            android:textAlignment="center"
+            android:textColor="@android:color/black" />
 
         <TextView
             android:layout_width="0dp"
@@ -54,7 +59,8 @@
             android:layout_weight="50.0"
             android:id="@+id/episode_number_field"
             android:textSize="18sp"
-            android:textAlignment="center" />
+            android:textAlignment="center"
+            android:textColor="@android:color/black" />
 
     </LinearLayout>
 
