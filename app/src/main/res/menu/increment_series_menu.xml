@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item android:title="Next episode"
+        android:id="@+id/next_episode_menu_item" />
+    <item android:title="Next season"
+        android:id="@+id/next_season_menu_item"
+        android:checkable="false" />
+</menu>

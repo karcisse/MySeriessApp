@@ -3,6 +3,11 @@ package com.karol.myseriesapp.activities;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.view.ContextMenu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
+import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
 
@@ -36,6 +41,7 @@ public class SeriesActivity extends AppCompatActivity {
 
         adapter = new SeriesAdapter(getApplicationContext(), items);
         seriesListView.setAdapter(adapter);
+        registerForContextMenu(seriesListView);
 
         FloatingAddSeriesButton floatingAddSeriesButton = (FloatingAddSeriesButton) findViewById(R.id.floating_add_series_button);
     }
@@ -56,5 +62,39 @@ public class SeriesActivity extends AppCompatActivity {
 
     private void loadSeriesItems() {
         items = dataBaseHandler.getSeriesList();
+    }
+
+    @Override
+    public void onCreateContextMenu(ContextMenu menu, View v, ContextMenu.ContextMenuInfo menuInfo) {
+        super.onCreateContextMenu(menu, v, menuInfo);
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.increment_series_menu, menu);
+    }
+
+    @Override
+    public boolean onContextItemSelected(MenuItem item) {
+        AdapterView.AdapterContextMenuInfo info = (AdapterView.AdapterContextMenuInfo) item.getMenuInfo();
+        switch (item.getItemId()) {
+            case R.id.next_episode_menu_item:
+                incrementEpisode((Series) seriesListView.getItemAtPosition(info.position));
+                return true;
+            case R.id.next_season_menu_item:
+                incrementSeason((Series) seriesListView.getItemAtPosition(info.position));
+                return true;
+            default:
+                return super.onContextItemSelected(item);
+        }
+    }
+
+    private void incrementSeason(Series series) {
+        series.incrementSeason();
+        dataBaseHandler.updateSeries(series);
+        adapter.notifyDataSetChanged();
+    }
+
+    private void incrementEpisode(Series series) {
+        series.incrementEpisde();
+        dataBaseHandler.updateSeries(series);
+        adapter.notifyDataSetChanged();
     }
 }

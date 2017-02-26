@@ -68,9 +68,9 @@ public class DataBaseHandler extends SQLiteOpenHelper {
 
         // TODO: 26/02/2017 Make better colum indexes
         // return contact
-        String title = cursor.getString(0);
-        Integer season = cursor.getInt(1);
-        Integer episode = cursor.getInt(2);
+        String title = cursor.getString(1);
+        Integer season = cursor.getInt(2);
+        Integer episode = cursor.getInt(3);
 
         Series series = new Series(title, season, episode);
         return series;

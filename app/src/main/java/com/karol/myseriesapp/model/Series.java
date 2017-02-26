@@ -36,4 +36,12 @@ public class Series implements Serializable {
     public String getEpisodeNuberString() {
         return String.valueOf(episodeNumber);
     }
+
+    public void incrementSeason() {
+        seasonNumber++;
+    }
+
+    public void incrementEpisde() {
+        episodeNumber++;
+    }
 }
