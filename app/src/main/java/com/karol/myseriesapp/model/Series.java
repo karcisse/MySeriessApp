@@ -28,4 +28,12 @@ public class Series implements Serializable {
     public int getEpisodeNumber() {
         return episodeNumber;
     }
+
+    public String getSeasonNumberString() {
+        return String.valueOf(seasonNumber);
+    }
+
+    public String getEpisodeNuberString() {
+        return String.valueOf(episodeNumber);
+    }
 }

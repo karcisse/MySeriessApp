@@ -9,7 +9,9 @@ import android.widget.EditText;
 import com.karol.myseriesapp.constants.AppConstants;
 import com.karol.myseriesapp.R;
 import com.karol.myseriesapp.SeriesListView;
+import com.karol.myseriesapp.controller.SeriesAdapter;
 import com.karol.myseriesapp.controls.FloatingAddSeriesButton;
+import com.karol.myseriesapp.database.DataBaseHandler;
 import com.karol.myseriesapp.model.Series;
 
 import java.util.ArrayList;
@@ -18,8 +20,9 @@ import java.util.HashMap;
 public class SeriesActivity extends AppCompatActivity {
     SeriesListView seriesListView;
     HashMap<String, EditText> fieldsMap;
-    ArrayAdapter<String> adapter;
-    ArrayList<String> items;
+    SeriesAdapter adapter;
+    ArrayList<Series> items;
+    DataBaseHandler dataBaseHandler;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -27,15 +30,11 @@ public class SeriesActivity extends AppCompatActivity {
         setContentView(R.layout.activity_series_list);
 
         seriesListView = (SeriesListView) findViewById(R.id.series_listview);
+        items = new ArrayList<>();
+        dataBaseHandler = new DataBaseHandler(this);
+        loadSeriesItems();
 
-        items = new ArrayList<String>();
-
-        String[] exampleData = {"Sd","sdsd","sds","sdsd","sds","sdsd","sds","sdsd","sds","sdsd","sds","sdsd","sds","sdsd","sds","sdsd","sds","sdsd","sds","sdsd","sds"};
-        for (String val : exampleData) {
-            items.add(val);
-        }
-
-        adapter = new ArrayAdapter<String>(getApplicationContext(),android.R.layout.simple_list_item_1, items);
+        adapter = new SeriesAdapter(getApplicationContext(), items);
         seriesListView.setAdapter(adapter);
 
         FloatingAddSeriesButton floatingAddSeriesButton = (FloatingAddSeriesButton) findViewById(R.id.floating_add_series_button);
@@ -48,11 +47,14 @@ public class SeriesActivity extends AppCompatActivity {
             if (resultCode == RESULT_OK) {
                 Series series = (Series) data.getSerializableExtra(AppConstants.SERIES_DATA_TAG);
 
-                items.add(series.getSeriesTitle());
-                items.add(String.valueOf(series.getSeasonNumber()));
-                items.add(String.valueOf(series.getEpisodeNumber()));
+                items.add(series);
+                dataBaseHandler.addSeries(series);
                 adapter.notifyDataSetChanged();
             }
         }
+    }
+
+    private void loadSeriesItems() {
+        items = dataBaseHandler.getSeriesList();
     }
 }
