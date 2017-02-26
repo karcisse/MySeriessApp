@@ -8,7 +8,6 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
 import android.widget.EditText;
 
 import com.karol.myseriesapp.constants.AppConstants;
@@ -68,7 +67,7 @@ public class SeriesActivity extends AppCompatActivity {
     public void onCreateContextMenu(ContextMenu menu, View v, ContextMenu.ContextMenuInfo menuInfo) {
         super.onCreateContextMenu(menu, v, menuInfo);
         MenuInflater inflater = getMenuInflater();
-        inflater.inflate(R.menu.increment_series_menu, menu);
+        inflater.inflate(R.menu.edit_series_context_menu, menu);
     }
 
     @Override
@@ -80,6 +79,9 @@ public class SeriesActivity extends AppCompatActivity {
                 return true;
             case R.id.next_season_menu_item:
                 incrementSeason((Series) seriesListView.getItemAtPosition(info.position));
+                return true;
+            case R.id.delete_series_menu_item:
+                deleteSeries((Series) seriesListView.getItemAtPosition(info.position));
                 return true;
             default:
                 return super.onContextItemSelected(item);
@@ -95,6 +97,13 @@ public class SeriesActivity extends AppCompatActivity {
     private void incrementEpisode(Series series) {
         series.incrementEpisde();
         dataBaseHandler.updateSeries(series);
+        adapter.notifyDataSetChanged();
+    }
+
+    private void deleteSeries(Series series) {
+        dataBaseHandler.deleteSeries(series);
+        items.clear();
+        items.addAll(dataBaseHandler.getSeriesList());
         adapter.notifyDataSetChanged();
     }
 }

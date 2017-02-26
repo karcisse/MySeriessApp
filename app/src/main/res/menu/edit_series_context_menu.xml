@@ -7,4 +7,6 @@
     <item android:title="Next season"
         android:id="@+id/next_season_menu_item"
         android:checkable="false" />
+    <item android:title="Delete"
+        android:id="@+id/delete_series_menu_item" />
 </menu>

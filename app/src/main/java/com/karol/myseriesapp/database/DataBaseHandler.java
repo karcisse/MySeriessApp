@@ -112,7 +112,6 @@ public class DataBaseHandler extends SQLiteOpenHelper {
         SQLiteDatabase db = this.getWritableDatabase();
         db.delete(TABLE_NAME, TITLE + " = ?",
                 new String[] { String.valueOf(series.getSeriesTitle()) });
-        db.close();
     }
 
     public int countSeries() {
