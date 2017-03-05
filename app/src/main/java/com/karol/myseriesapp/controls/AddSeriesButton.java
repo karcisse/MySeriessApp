@@ -53,10 +53,21 @@ public class AddSeriesButton extends Button implements View.OnClickListener {
     }
 
     private Series prepareSeries(AddSeriesActivity activity) {
+        // TODO: 05/03/2017 exception to stop adding series
         HashMap<String, EditText> seriesHashMap = activity.getFieldsMap();
-        return new Series(seriesHashMap.get(AppConstants.SERIES_TITLE).getText().toString(),
-                Integer.parseInt(seriesHashMap.get(AppConstants.SEASON_NUMBER).getText().toString()),
-                Integer.parseInt(seriesHashMap.get(AppConstants.EPISODE_NUMBER).getText().toString())
-        );
+        if (!activity.validateEpisodeNubmer()) {
+            return new Series();
+        }
+        if (!activity.validateSeriesTitle()) {
+            return new Series();
+        }
+        if (!activity.validateSeasonNumber()){
+            return new Series();
+        } else {
+            return new Series(seriesHashMap.get(AppConstants.SERIES_TITLE).getText().toString(),
+                    Integer.parseInt(seriesHashMap.get(AppConstants.SEASON_NUMBER).getText().toString()),
+                    Integer.parseInt(seriesHashMap.get(AppConstants.EPISODE_NUMBER).getText().toString())
+            );
+        }
     }
 }

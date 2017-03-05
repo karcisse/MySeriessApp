@@ -26,9 +26,17 @@ public class Series implements Serializable {
         this.episodeNumber = episodeNumber;
     }
 
+    public Series() {
+        this.id = -1;
+        this.seriesTitle = "";
+        this.seasonNumber = 1;
+        this.episodeNumber = 1;
+    }
+
     public String getSeriesTitle() {
         return seriesTitle;
     }
+
 
     public int getSeasonNumber() {
         return seasonNumber;
