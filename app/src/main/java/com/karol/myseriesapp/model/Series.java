@@ -38,6 +38,7 @@ public class Series implements Serializable {
     }
 
     public void incrementSeason() {
+        episodeNumber = 1;
         seasonNumber++;
     }
 
