@@ -8,6 +8,7 @@ import android.view.View;
 
 import com.karol.myseriesapp.activities.AddSeriesActivity;
 import com.karol.myseriesapp.activities.SeriesActivity;
+import com.karol.myseriesapp.constants.AppConstants;
 
 /**
  * Created by Karol on 20/02/2017.
@@ -39,6 +40,6 @@ public class FloatingAddSeriesButton extends FloatingActionButton implements Vie
     public void onClick(View v) {
         Intent intent = new Intent(v.getContext(), AddSeriesActivity.class);
         SeriesActivity activity = (SeriesActivity) getContext();
-        activity.startActivityForResult(intent, 1);
+        activity.startActivityForResult(intent, AppConstants.RequestCode.ADD_SERIES);
     }
 }

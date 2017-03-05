@@ -7,11 +7,20 @@ import java.io.Serializable;
  */
 
 public class Series implements Serializable {
+    private long id; // is also position in List
     private String seriesTitle;
     private int seasonNumber;
     private int episodeNumber;
 
+    public Series(long id, String seriesTitle, int seasonNumber, int episodeNumber) {
+        this.id = id;
+        this.seriesTitle = seriesTitle;
+        this.seasonNumber = seasonNumber;
+        this.episodeNumber = episodeNumber;
+    }
+
     public Series(String seriesTitle, int seasonNumber, int episodeNumber) {
+        this.id = -1;
         this.seriesTitle = seriesTitle;
         this.seasonNumber = seasonNumber;
         this.episodeNumber = episodeNumber;
@@ -44,5 +53,13 @@ public class Series implements Serializable {
 
     public void incrementEpisde() {
         episodeNumber++;
+    }
+
+    public long getId() {
+        return id;
+    }
+
+    public void setId(long id) {
+        this.id = id;
     }
 }

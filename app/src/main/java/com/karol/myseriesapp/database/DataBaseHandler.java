@@ -7,21 +7,16 @@ import android.database.DatabaseErrorHandler;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
+import com.karol.myseriesapp.constants.AppConstants;
 import com.karol.myseriesapp.model.Series;
 
 import java.util.ArrayList;
 
 public class DataBaseHandler extends SQLiteOpenHelper {
     private static final int DATABASE_VERSION = 1;
-    private static final String DATABASE_NAME = "seriesDataBase";
-    private static final String TABLE_NAME = "series";
-    private static final String KEY_ID = "id";
-    private static final String TITLE = "title";
-    private static final String SEASON = "season_number";
-    private static final String EPISODE = "episode_number";
 
     public DataBaseHandler(Context context) {
-        super(context, DATABASE_NAME, null, DATABASE_VERSION);
+        super(context, AppConstants.DataBase.DATABASE_NAME, null, DATABASE_VERSION);
     }
 
     public DataBaseHandler(Context context, String name, SQLiteDatabase.CursorFactory factory, int version) {
@@ -34,8 +29,9 @@ public class DataBaseHandler extends SQLiteOpenHelper {
 
     @Override
     public void onCreate(SQLiteDatabase db) {
-        String CREATE_TABLE = "CREATE TABLE " + TABLE_NAME + "(" + KEY_ID + " INTEGER PRIMARY KEY, " + TITLE + " TEXT, " + SEASON + " INTEGER, "
-                + EPISODE + " INTEGER " + ")";
+        String CREATE_TABLE = "CREATE TABLE " + AppConstants.DataBase.TABLE_NAME + "(" + AppConstants.DataBase.KEY_ID + " INTEGER PRIMARY KEY, " 
+                + AppConstants.DataBase.TITLE + " TEXT, " + AppConstants.DataBase.SEASON + " INTEGER, "
+                + AppConstants.DataBase.EPISODE + " INTEGER " + ")";
         db.execSQL(CREATE_TABLE);
     }
 
@@ -49,42 +45,54 @@ public class DataBaseHandler extends SQLiteOpenHelper {
 
         ContentValues values = new ContentValues();
 
-        values.put(TITLE, series.getSeriesTitle());
-        values.put(SEASON, series.getSeasonNumber());
-        values.put(EPISODE, series.getEpisodeNumber());
+        values.put(AppConstants.DataBase.TITLE, series.getSeriesTitle());
+        values.put(AppConstants.DataBase.SEASON, series.getSeasonNumber());
+        values.put(AppConstants.DataBase.EPISODE, series.getEpisodeNumber());
 
-        db.insert(TABLE_NAME, null, values);
+        db.insert(AppConstants.DataBase.TABLE_NAME, null, values);
         db.close();
     }
 
     public Series getSeries(int id) {
         SQLiteDatabase db = this.getReadableDatabase();
 
-        Cursor cursor = db.query(TABLE_NAME, new String[] { KEY_ID,
-                        TITLE, SEASON, EPISODE}, KEY_ID + "=?",
+        Cursor cursor = db.query(AppConstants.DataBase.TABLE_NAME, new String[] { AppConstants.DataBase.KEY_ID,
+                        AppConstants.DataBase.TITLE, AppConstants.DataBase.SEASON, AppConstants.DataBase.EPISODE}, AppConstants.DataBase.KEY_ID + "=?",
                 new String[] { String.valueOf(id) }, null, null, null, null);
         if (cursor != null)
             cursor.moveToFirst();
 
         // TODO: 26/02/2017 Make better colum indexes
         // return contact
+        Integer keyId = cursor.getInt(0);
         String title = cursor.getString(1);
         Integer season = cursor.getInt(2);
         Integer episode = cursor.getInt(3);
 
-        Series series = new Series(title, season, episode);
+        Series series = new Series(keyId, title, season, episode);
         return series;
+    }
+
+    public Cursor getSeriesData() {
+
+        String selectQuery = "SELECT  * FROM " + AppConstants.DataBase.TABLE_NAME;
+
+        SQLiteDatabase db = getWritableDatabase();
+        Cursor cursor = db.rawQuery(selectQuery, null);
+
+        return cursor;
     }
 
     public ArrayList<Series> getSeriesList() {
         ArrayList<Series> seriesList = new ArrayList<Series>();
 
-        String selectQuery = "SELECT  * FROM " + TABLE_NAME;
+        String selectQuery = "SELECT  * FROM " + AppConstants.DataBase.TABLE_NAME;
 
         SQLiteDatabase db = getWritableDatabase();
         Cursor cursor = db.rawQuery(selectQuery, null);
 
         while (cursor.moveToNext()) {
+            Integer keyId = cursor.getInt(0);
             String title = cursor.getString(1);
             Integer season = cursor.getInt(2);
             Integer episode = cursor.getInt(3);
@@ -99,26 +107,26 @@ public class DataBaseHandler extends SQLiteOpenHelper {
         SQLiteDatabase db = this.getWritableDatabase();
 
         ContentValues values = new ContentValues();
-        values.put(TITLE, series.getSeriesTitle());
-        values.put(SEASON, series.getSeasonNumber());
-        values.put(EPISODE, series.getEpisodeNumber());
+        values.put(AppConstants.DataBase.KEY_ID, series.getId());
+        values.put(AppConstants.DataBase.TITLE, series.getSeriesTitle());
+        values.put(AppConstants.DataBase.SEASON, series.getSeasonNumber());
+        values.put(AppConstants.DataBase.EPISODE, series.getEpisodeNumber());
 
         // updating row
-        return db.update(TABLE_NAME, values, TITLE + " = ?",
-                new String[] { String.valueOf(series.getSeriesTitle()) });
+        return db.update(AppConstants.DataBase.TABLE_NAME, values, AppConstants.DataBase.KEY_ID + " = ?",
+                new String[] { String.valueOf(series.getId()) });
     }
 
     public void deleteSeries (Series series) {
         SQLiteDatabase db = this.getWritableDatabase();
-        db.delete(TABLE_NAME, TITLE + " = ?",
-                new String[] { String.valueOf(series.getSeriesTitle()) });
+        db.delete(AppConstants.DataBase.TABLE_NAME, AppConstants.DataBase.KEY_ID + " = ?",
+                new String[] { String.valueOf(series.getId()) });
     }
 
     public int countSeries() {
-        String countQuery = "SELECT  * FROM " + TABLE_NAME;
+        String countQuery = "SELECT  * FROM " + AppConstants.DataBase.TABLE_NAME;
         SQLiteDatabase db = this.getReadableDatabase();
         Cursor cursor = db.rawQuery(countQuery, null);
-        cursor.close();
 
         // return count
         return cursor.getCount();
