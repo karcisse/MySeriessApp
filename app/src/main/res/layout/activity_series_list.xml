@@ -11,6 +11,14 @@
     android:paddingTop="@dimen/activity_vertical_margin"
     tools:context="com.karol.myseriesapp.activities.SeriesActivity">
 
+    <com.karol.myseriesapp.SeriesListView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:id="@+id/series_listview"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true">
+    </com.karol.myseriesapp.SeriesListView>
+
     <com.karol.myseriesapp.controls.FloatingAddSeriesButton
         android:layout_height="wrap_content"
         android:clickable="true"
@@ -23,13 +31,5 @@
         android:layout_alignParentEnd="false"
         android:layout_alignParentBottom="true"
         android:layout_alignParentRight="true" />
-
-    <com.karol.myseriesapp.SeriesListView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:id="@+id/series_listview"
-        android:layout_alignParentStart="true"
-        android:layout_alignParentTop="true">
-    </com.karol.myseriesapp.SeriesListView>
 
 </RelativeLayout>

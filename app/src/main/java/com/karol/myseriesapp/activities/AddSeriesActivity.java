@@ -9,12 +9,14 @@ import android.widget.TextView;
 
 import com.karol.myseriesapp.constants.AppConstants;
 import com.karol.myseriesapp.R;
-import com.karol.myseriesapp.model.Series;
 
 import java.util.HashMap;
 
 // TODO: 05/03/2017 handle empty data input
 public class AddSeriesActivity extends AppCompatActivity {
+
+    public static int RESULT_NOT_VALID = 12;
+
     HashMap<String, EditText> fieldsMap;
 
     @Override
