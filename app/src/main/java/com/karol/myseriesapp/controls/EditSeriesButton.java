@@ -42,22 +42,7 @@ public class EditSeriesButton extends Button implements View.OnClickListener {
 
     @Override
     public void onClick(View v) {
-        Intent intent = new Intent();
         EditSeriesActivity activity = (EditSeriesActivity) getContext();
-
-        Series series = prepareSeries(activity);
-
-        intent.putExtra(AppConstants.SERIES_DATA_TAG, series);
-
-        activity.setResult(Activity.RESULT_OK, intent);
-        activity.finish();
-    }
-
-    private Series prepareSeries(EditSeriesActivity activity) {
-        HashMap<String, EditText> seriesHashMap = activity.getFieldsMap();
-        return new Series(activity.getSeriesId(), seriesHashMap.get(AppConstants.SERIES_TITLE).getText().toString(),
-                Integer.parseInt(seriesHashMap.get(AppConstants.SEASON_NUMBER).getText().toString()),
-                Integer.parseInt(seriesHashMap.get(AppConstants.EPISODE_NUMBER).getText().toString())
-        );
+        activity.sendSeriesData();
     }
 }

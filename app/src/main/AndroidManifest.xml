@@ -15,7 +15,9 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".activities.AddSeriesActivity"></activity>
+        <activity android:name=".activities.AddSeriesActivity"
+            android:windowSoftInputMode="stateVisible"
+            ></activity>
         <activity android:name=".activities.EditSeriesActivity" />
     </application>
 

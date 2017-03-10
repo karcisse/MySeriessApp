@@ -1,11 +1,14 @@
 package com.karol.myseriesapp.activities;
 
+import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.widget.EditText;
 
 import com.karol.myseriesapp.R;
 import com.karol.myseriesapp.constants.AppConstants;
+import com.karol.myseriesapp.controller.InputValidator;
 import com.karol.myseriesapp.model.Series;
 
 import java.util.HashMap;
@@ -43,7 +46,26 @@ public class EditSeriesActivity extends AppCompatActivity {
         return series.getId();
     }
 
-    public HashMap<String, EditText> getFieldsMap() {
-        return fieldsMap;
+    public void sendSeriesData() {
+        Intent intent = new Intent();
+
+        if (!InputValidator.validateInputs(fieldsMap)) {
+            InputValidator.displayErrorMessage(getApplicationContext(), "Please fill all fields");
+            return;
+        }
+
+        Series series = prepareSeries();
+
+        intent.putExtra(AppConstants.SERIES_DATA_TAG, series);
+
+        setResult(Activity.RESULT_OK, intent);
+        finish();
+    }
+
+    private Series prepareSeries() {
+        return new Series(getSeriesId(), fieldsMap.get(AppConstants.SERIES_TITLE).getText().toString(),
+                Integer.parseInt(fieldsMap.get(AppConstants.SEASON_NUMBER).getText().toString()),
+                Integer.parseInt(fieldsMap.get(AppConstants.EPISODE_NUMBER).getText().toString())
+        );
     }
 }
