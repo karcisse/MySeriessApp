@@ -15,7 +15,6 @@ import com.karol.myseriesapp.R;
 import com.karol.myseriesapp.SeriesListView;
 import com.karol.myseriesapp.constants.AppConstants;
 import com.karol.myseriesapp.controller.SeriesCursorAdapter;
-import com.karol.myseriesapp.controls.FloatingAddSeriesButton;
 import com.karol.myseriesapp.database.DataBaseHandler;
 import com.karol.myseriesapp.model.Series;
 
@@ -35,8 +34,6 @@ public class SeriesActivity extends AppCompatActivity {
         adapter = new SeriesCursorAdapter(this, dataBaseHandler.getSeriesData());
         seriesListView.setAdapter(adapter);
         registerForContextMenu(seriesListView);
-
-        FloatingAddSeriesButton floatingAddSeriesButton = (FloatingAddSeriesButton) findViewById(R.id.floating_add_series_button);
     }
 
     @Override

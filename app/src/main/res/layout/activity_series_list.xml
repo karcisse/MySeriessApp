@@ -20,16 +20,18 @@
     </com.karol.myseriesapp.SeriesListView>
 
     <com.karol.myseriesapp.controls.FloatingAddSeriesButton
-        android:layout_height="wrap_content"
+        android:layout_height="60dp"
         android:clickable="true"
         app:fabSize="normal"
-        app:srcCompat="@android:drawable/ic_input_add"
+        app:srcCompat="@mipmap/circle_no_bg"
         android:id="@+id/floating_add_series_button"
         android:layout_width="60dp"
         app:backgroundTint="?attr/actionModeSplitBackground"
         android:layout_alignLeft="@android:id/candidatesArea"
         android:layout_alignParentEnd="false"
         android:layout_alignParentBottom="true"
-        android:layout_alignParentRight="true" />
+        android:layout_alignParentRight="true"
+        android:adjustViewBounds="true"
+        android:scaleType="center"/>
 
 </RelativeLayout>
