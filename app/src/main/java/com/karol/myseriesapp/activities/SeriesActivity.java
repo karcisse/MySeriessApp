@@ -4,8 +4,10 @@ import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteCursor;
 import android.os.Bundle;
+import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.view.ContextMenu;
+import android.view.Gravity;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
@@ -15,13 +17,17 @@ import com.karol.myseriesapp.R;
 import com.karol.myseriesapp.SeriesListView;
 import com.karol.myseriesapp.constants.AppConstants;
 import com.karol.myseriesapp.controller.SeriesCursorAdapter;
+import com.karol.myseriesapp.controls.EdgeNavDrawer;
 import com.karol.myseriesapp.database.DataBaseHandler;
 import com.karol.myseriesapp.model.Series;
 
 public class SeriesActivity extends AppCompatActivity {
-    SeriesListView seriesListView;
-    SeriesCursorAdapter adapter;
-    DataBaseHandler dataBaseHandler;
+    private SeriesListView seriesListView;
+    private SeriesCursorAdapter adapter;
+    private DataBaseHandler dataBaseHandler;
+
+    private EdgeNavDrawer mDrawerList;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -34,6 +40,10 @@ public class SeriesActivity extends AppCompatActivity {
         adapter = new SeriesCursorAdapter(this, dataBaseHandler.getSeriesData());
         seriesListView.setAdapter(adapter);
         registerForContextMenu(seriesListView);
+
+        mDrawerList = (EdgeNavDrawer) findViewById(R.id.navList);
+
+
     }
 
     @Override
@@ -46,6 +56,7 @@ public class SeriesActivity extends AppCompatActivity {
                 dataBaseHandler.addSeries(series);
                 adapter.changeCursor(dataBaseHandler.getSeriesData());
             }
+            closeDrawer();
         }
         if (requestCode == AppConstants.RequestCode.EDIT_SERIES) {
             if (resultCode == RESULT_OK) {
@@ -130,5 +141,10 @@ public class SeriesActivity extends AppCompatActivity {
             e.printStackTrace();
             return null;
         }
+    }
+
+    private void closeDrawer() {
+        DrawerLayout drawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
+        drawerLayout.closeDrawer(Gravity.LEFT);
     }
 }
